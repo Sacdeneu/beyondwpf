@@ -1,0 +1,12 @@
+﻿DwmSetWindowAttribute
+DwmGetWindowAttribute
+DwmIsCompositionEnabled
+DwmExtendFrameIntoClientArea
+DwmGetColorizationParameters
+SetWindowCompositionAttribute
+SetWindowThemeAttribute
+IsWindow
+GetWindowLong
+SetWindowLong
+SetWindowLongPtr
+SetWindowRgn

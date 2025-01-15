@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -6,15 +6,30 @@
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <None Remove="Fonts\Inter.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Themes\Button.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Controls\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BeyondWPF.Core\BeyondWPF.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Inter.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Themes\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
   </ItemGroup>
 
 </Project>

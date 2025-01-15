@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BeyondWPF.BaseApplication"
+        xmlns:helpers="clr-namespace:BeyondWPF.Common.Helpers;assembly=BeyondWPF.Common"
         mc:Ignorable="d"
+        
+    d:DataContext="{d:DesignInstance local:MainWindow,
+                                     IsDesignTimeCreatable=False}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button>Un bouton de test</Button>
 
     </Grid>
 </Window>
