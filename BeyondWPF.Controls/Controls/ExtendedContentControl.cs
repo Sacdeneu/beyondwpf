@@ -1,8 +1,8 @@
-﻿using BeyondWPF.Common.Helpers;
+﻿using BeyondWPF.Controls.Helpers;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BeyondWPF.Common.Controls
+namespace BeyondWPF.Controls.Controls
 {
     public class ExtendedContentControl : ContentControl
     {

@@ -1,0 +1,12 @@
+<Application x:Class="BeyondWPF.BaseApplication.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Application Base will handle Common resources, but we can add app-specific ones here -->
+                <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

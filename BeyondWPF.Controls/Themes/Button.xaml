@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:BeyondWPF.Common.Controls;assembly=BeyondWPF.Common"
-                    xmlns:helpers="clr-namespace:BeyondWPF.Common.Helpers;assembly=BeyondWPF.Common"
-                    xmlns:resources="clr-namespace:BeyondWPF.Common.Resources;assembly=BeyondWPF.Common"
+                    xmlns:controls="clr-namespace:BeyondWPF.Controls.Controls"
+                    xmlns:helpers="clr-namespace:BeyondWPF.Controls.Helpers"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Common;component/Themes/ExtendedContentControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/ExtendedContentControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
@@ -19,20 +18,21 @@
     <Color x:Key="ButtonPressedBackgroundColor">#FF2E6FD4</Color>
 
     <!-- FONTS -->
-    <FontFamily x:Key="ContentControlThemeFontFamily">pack://application:,,,/BeyondWPF.Common;component/Fonts/#Inter</FontFamily>
+    <!-- Assuming Fonts are still in Common or moved? Needed check. Using generic font checks -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
 
-    <!-- Définir les brosses basées sur les couleurs -->
-    <SolidColorBrush x:Key="BorderLightBrush" Color="{resources:ThemeResource BorderLightBrush}" />
-    <SolidColorBrush x:Key="ControlLightBrush" Color="{resources:ThemeResource ControlLightColor}" />
-    <SolidColorBrush x:Key="ControlDarkBrush" Color="{resources:ThemeResource ControlDarkColor}" />
-    <SolidColorBrush x:Key="TextBrush" Color="{resources:ThemeResource TextColor}" />
-    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{resources:ThemeResource ButtonBackgroundColor}" />
+    <!-- Defines brushes based on colors -->
+    <SolidColorBrush x:Key="BorderLightBrush" Color="{DynamicResource BorderLightColor}" />
+    <SolidColorBrush x:Key="ControlLightBrush" Color="{DynamicResource ControlLightColor}" />
+    <SolidColorBrush x:Key="ControlDarkBrush" Color="{DynamicResource ControlDarkColor}" />
+    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackgroundColor}" />
     <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="{StaticResource ButtonHoverBackgroundColor}" />
     <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="{StaticResource ButtonDisabledBackgroundColor}" />
     <SolidColorBrush x:Key="ButtonDisabledForegroundBrush" Color="{StaticResource ButtonDisabledForegroundColor}" />
     <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="{StaticResource ButtonPressedBackgroundColor}" />
 
-    <!-- Exemple de style pour un contrôle -->
+    <!-- Style -->
     <Style x:Key="DefaultButtonStyle" TargetType="Button">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <!-- Adapter la taille au contenu -->

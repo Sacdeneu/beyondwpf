@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeyondWPF.Common.Appearance
+namespace BeyondWPF.Core.Enums
 {
 
     public enum SystemTheme

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace BeyondWPF.Common.Helpers
+namespace BeyondWPF.Controls.Helpers
 {
     public static class CornerRadiusHelper
     {

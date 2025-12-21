@@ -3,15 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BeyondWPF.BaseApplication"
-        xmlns:helpers="clr-namespace:BeyondWPF.Common.Helpers;assembly=BeyondWPF.Common"
+        xmlns:viewModels="clr-namespace:BeyondWPF.BaseApplication.ViewModels"
         mc:Ignorable="d"
-        
-    d:DataContext="{d:DesignInstance local:MainWindow,
-                                     IsDesignTimeCreatable=False}"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button>Un bouton de test</Button>
+        Title="{Binding Title}" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource ControlLightBrush}"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=False}">
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{DynamicResource ControlDarkBrush}" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,0,1,0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="BeyondWPF" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="10"/>
+
+                <StackPanel Grid.Row="1" Margin="0,20">
+                    <Button Content="ComboBox" Command="{Binding NavigateToComboBoxCommand}" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                            Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+                    <!-- Add more buttons here for other controls -->
+                </StackPanel>
+
+                <ToggleButton Grid.Row="2" Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" 
+                              HorizontalAlignment="Stretch" Padding="10" Margin="0,10"/>
+            </Grid>
+        </Border>
+
+        <!-- Content -->
+        <Border Grid.Column="1" Background="{DynamicResource ControlLightBrush}">
+            <ContentControl Content="{Binding CurrentView}"/>
+        </Border>
     </Grid>
 </Window>

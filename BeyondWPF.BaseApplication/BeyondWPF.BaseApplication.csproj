@@ -9,8 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BeyondWPF.Common\BeyondWPF.Common.csproj" />
     <ProjectReference Include="..\BeyondWPF.Core\BeyondWPF.Core.csproj" />
+    <ProjectReference Include="..\BeyondWPF.Controls\BeyondWPF.Controls.csproj" />
   </ItemGroup>
 
 </Project>
