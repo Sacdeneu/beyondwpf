@@ -7,6 +7,10 @@ namespace BeyondWPF.Core.Abstractions
     {
         void ApplyTheme(SystemTheme theme);
         SystemTheme GetCurrentTheme();
-        void ApplySystemAccent();
+        /// <summary>
+        /// Applies the system accent color to the application resources.
+        /// </summary>
+        /// <param name="isEnabled">If true, uses system/blue accent. If false, uses neutral gray.</param>
+        void ApplySystemAccent(bool isEnabled);
     }
 }

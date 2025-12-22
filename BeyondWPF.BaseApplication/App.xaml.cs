@@ -7,6 +7,7 @@ using BeyondWPF.Common.Services;
 using BeyondWPF.Core.Abstractions;
 using BeyondWPF.Core.Enums;
 using BeyondWPF.Core.Settings;
+using BeyondWPF.BaseApplication.Settings;
 
 namespace BeyondWPF.BaseApplication
 {
@@ -24,7 +25,12 @@ namespace BeyondWPF.BaseApplication
                 {
                     // Core Services
                     services.AddSingleton<IThemeService, ThemeService>();
-                    services.AddSingleton<ISetting>(BaseSettings.Instance);
+                    
+                    // Settings
+                    var settings = new AppSettings();
+                    settings.LoadSettings<AppSettings>();
+                    services.AddSingleton<ISetting>(settings);
+                    services.AddSingleton(settings); // Allow direct injection of AppSettings
 
                     // ViewModels
                     services.AddSingleton<MainViewModel>();
@@ -32,6 +38,14 @@ namespace BeyondWPF.BaseApplication
                     // Views
                     services.AddSingleton<MainWindow>();
                     services.AddTransient<ComboBoxPage>();
+                    services.AddTransient<ButtonPage>();
+                    services.AddTransient<TextBoxPage>();
+                    services.AddTransient<CheckBoxPage>();
+                    services.AddTransient<RadioButtonPage>();
+                    services.AddTransient<ProgressBarPage>();
+                    services.AddTransient<SliderPage>();
+                    services.AddTransient<TabControlPage>();
+                    // Register other pages here as we add them
                 })
                 .Build();
         }
@@ -43,8 +57,10 @@ namespace BeyondWPF.BaseApplication
             try
             {
                 var themeService = _host.Services.GetRequiredService<IThemeService>();
+                var settings = _host.Services.GetRequiredService<AppSettings>();
+                
                 // Initialize Theme
-                themeService.ApplySystemAccent();
+                themeService.ApplySystemAccent(settings.UseAccentColor);
                 themeService.ApplyTheme(SystemTheme.Light);
             }
             catch (Exception ex)

@@ -41,7 +41,14 @@ namespace BeyondWPF.Common.Services
            
            dictionaries.Add(new ResourceDictionary { Source = uri });
            
-           ApplySystemAccent();
+           // We need to re-apply accent because theme switch might reset resources or we want to persist the current accent state.
+           // However, the interface requires us to pass the state. 
+           // In a real app we might inject settings here or store state.
+           // For now, let's assume we call ApplySystemAccent explicitly from ViewModel after theme switch if needed, 
+           // or we overload ApplyTheme to accept the flag. 
+           // BUT, to keep it simple and assuming ViewModel handles it:
+           // We DO NOT call ApplySystemAccent here to avoid dependency on Settings.
+           // The ViewModel is responsible for re-applying accent if needed.
         }
 
         public SystemTheme GetCurrentTheme()
@@ -51,13 +58,24 @@ namespace BeyondWPF.Common.Services
              return (rawAppsUseLightTheme is 0) ? SystemTheme.Dark : SystemTheme.Light;
         }
 
-        public void ApplySystemAccent()
+        public void ApplySystemAccent(bool isEnabled)
         {
-            var systemAccent = SystemParameters.WindowGlassColor;
-            if (systemAccent.A == 0) systemAccent = Color.FromRgb(0, 120, 215);
+            Color accentColor;
 
-            Application.Current.Resources["SystemAccentColor"] = systemAccent;
-            Application.Current.Resources["SystemAccentBrush"] = new SolidColorBrush(systemAccent);
+            if (isEnabled)
+            {
+                // Use System Accent or Fallback Blue
+                accentColor = SystemParameters.WindowGlassColor;
+                if (accentColor.A == 0) accentColor = Color.FromRgb(0, 120, 215); // Default Blue
+            }
+            else
+            {
+                // Neutral Gray
+                accentColor = Color.FromRgb(153, 153, 153); // #999999
+            }
+
+            Application.Current.Resources["SystemAccentColor"] = accentColor;
+            Application.Current.Resources["SystemAccentBrush"] = new SolidColorBrush(accentColor);
         }
     }
 }

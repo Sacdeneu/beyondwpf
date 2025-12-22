@@ -4,44 +4,172 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:BeyondWPF.BaseApplication.ViewModels"
+        xmlns:converters="clr-namespace:BeyondWPF.BaseApplication.Converters"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource ControlLightBrush}"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=False}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="5" CornerRadius="0" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
 
-        <!-- Sidebar -->
-        <Border Grid.Column="0" Background="{DynamicResource ControlDarkBrush}" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,0,1,0">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+    <Border Background="{DynamicResource ControlDarkBrush}" 
+            CornerRadius="{Binding BorderCornerRadius}" 
+            BorderBrush="{DynamicResource BorderLightBrush}" 
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <TextBlock Text="BeyondWPF" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="10"/>
+            <!-- Title Bar -->
+            <Grid Grid.Row="0" Background="Transparent">
+                <Grid.Resources>
+                    <converters:CornerRadiusToTopRightConverter x:Key="CornerRadiusToTopRightConverter"/>
 
-                <StackPanel Grid.Row="1" Margin="0,20">
-                    <Button Content="ComboBox" Command="{Binding NavigateToComboBoxCommand}" 
-                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
-                            Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
-                    <!-- Add more buttons here for other controls -->
+                    <Style x:Key="CaptionButtonStyle" TargetType="Button">
+                        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                        <Setter Property="Width" Value="45"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#33888888"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#66888888"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="CaptionCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+                         <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                            CornerRadius="{Binding DataContext.BorderCornerRadius, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource CornerRadiusToTopRightConverter}}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E81123"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#BC0B19"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10,0" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="_" Click="Minimize_Click" Style="{StaticResource CaptionButtonStyle}"/>
+                    <Button Content="[ ]" Click="Maximize_Click" Style="{StaticResource CaptionButtonStyle}"/>
+                    <Button Content="X" Click="Close_Click" Style="{StaticResource CaptionCloseButtonStyle}"/> 
                 </StackPanel>
-
-                <ToggleButton Grid.Row="2" Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" 
-                              HorizontalAlignment="Stretch" Padding="10" Margin="0,10"/>
             </Grid>
-        </Border>
 
-        <!-- Content -->
-        <Border Grid.Column="1" Background="{DynamicResource ControlLightBrush}">
-            <ContentControl Content="{Binding CurrentView}"/>
-        </Border>
-    </Grid>
+            <!-- Main Content -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Sidebar -->
+                <Border Grid.Column="0" Background="Transparent" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,0,1,0">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="BeyondWPF" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="10"/>
+
+                        <ScrollViewer Grid.Row="1" Margin="0,20" VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <Button Content="ComboBox" Command="{Binding NavigateToComboBoxCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+                                
+                                <Button Content="Buttons" Command="{Binding NavigateToButtonCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="TextBox" Command="{Binding NavigateToTextBoxCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="CheckBox" Command="{Binding NavigateToCheckBoxCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="RadioButton" Command="{Binding NavigateToRadioButtonCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="ProgressBar" Command="{Binding NavigateToProgressBarCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="Slider" Command="{Binding NavigateToSliderCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="TabControl" Command="{Binding NavigateToTabControlCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <StackPanel Grid.Row="2" Margin="0,10">
+                            <ToggleButton Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" 
+                                          HorizontalAlignment="Stretch" Padding="10" Margin="0,5"/>
+                            <Button Content="Toggle Border" Command="{Binding ToggleBorderCommand}" 
+                                    HorizontalAlignment="Stretch" Padding="10" Margin="0,5"/>
+                            <CheckBox Content="Save Window Position" IsChecked="{Binding Settings.SaveWindowPosition}"
+                                      Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
+                            <CheckBox Content="Enable Accent Color" IsChecked="{Binding Settings.UseAccentColor}"
+                                      Command="{Binding ToggleAccentColorCommand}"
+                                      Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Content -->
+                <Border Grid.Column="1" Background="{DynamicResource ControlLightBrush}" Margin="0"
+                        CornerRadius="{Binding BorderCornerRadius}">
+                     <!-- Inner corner radius for content could be added here if we want double rounded look, but usually window rounded is enough -->
+                    <ContentControl Content="{Binding CurrentView}" Margin="5"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
