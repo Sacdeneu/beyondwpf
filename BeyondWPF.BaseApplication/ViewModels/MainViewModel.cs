@@ -151,5 +151,17 @@ namespace BeyondWPF.BaseApplication.ViewModels
         {
              CurrentView = _serviceProvider.GetRequiredService<TabControlPage>();
         }
+
+        [RelayCommand]
+        public void NavigateToListBox()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<ListBoxPage>();
+        }
+
+        [RelayCommand]
+        public void NavigateToDatePicker()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<DatePickerPage>();
+        }
     }
 }

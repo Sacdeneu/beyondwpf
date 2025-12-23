@@ -3,9 +3,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/ComboBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/Button.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/ExtendedContentControl.xaml" />
+        <!-- Adding fallback for SystemAccentBrush to satisfy build-time requirements for this library.
+             At runtime, the Application's merged dictionaries (ThemeService) will take precedence. -->
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="SystemAccentBrush" Color="#FF0078D7"/>
+        </ResourceDictionary>
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Light.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ExtendedContentControl.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ComboBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Button.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/RadioButton.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/TextBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ListBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/CheckBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Slider.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/TabControl.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Calendar.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/DatePicker.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ProgressBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

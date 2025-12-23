@@ -146,6 +146,14 @@
                                 <Button Content="TabControl" Command="{Binding NavigateToTabControlCommand}" 
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+                                
+                                <Button Content="ListBox" Command="{Binding NavigateToListBoxCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="DatePicker" Command="{Binding NavigateToDatePickerCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
                             </StackPanel>
                         </ScrollViewer>
 

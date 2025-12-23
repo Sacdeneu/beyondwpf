@@ -7,93 +7,87 @@
         <ResourceDictionary Source="pack://application:,,,/BeyondWPF.Controls;component/Themes/ExtendedContentControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Fallback/Design-time Brush to satisfy compiler -->
+    <SolidColorBrush x:Key="SystemAccentBrush" Color="#0078D7"/>
+
     <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
-    <CornerRadius x:Key="ControlCornerRadius">4,4,4,4</CornerRadius>
-    <CornerRadius x:Key="OverlayCornerRadius">8,8,8,8</CornerRadius>
-    <sys:Double x:Key="ControlContentThemeFontSize">14</sys:Double>
 
-    <Color x:Key="ButtonHoverBackgroundColor">#FF629EF8</Color>
-    <Color x:Key="ButtonDisabledBackgroundColor">#FF333333</Color>
-    <Color x:Key="ButtonDisabledForegroundColor">#FF888888</Color>
-    <Color x:Key="ButtonPressedBackgroundColor">#FF2E6FD4</Color>
-
-    <!-- FONTS -->
-    <!-- Assuming Fonts are still in Common or moved? Needed check. Using generic font checks -->
-    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
-
-    <!-- Defines brushes based on colors -->
-    <SolidColorBrush x:Key="BorderLightBrush" Color="{DynamicResource BorderLightColor}" />
-    <SolidColorBrush x:Key="ControlLightBrush" Color="{DynamicResource ControlLightColor}" />
-    <SolidColorBrush x:Key="ControlDarkBrush" Color="{DynamicResource ControlDarkColor}" />
-    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
-    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackgroundColor}" />
-    <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="{StaticResource ButtonHoverBackgroundColor}" />
-    <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="{StaticResource ButtonDisabledBackgroundColor}" />
-    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush" Color="{StaticResource ButtonDisabledForegroundColor}" />
-    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="{StaticResource ButtonPressedBackgroundColor}" />
-
-    <!-- Style -->
-    <Style x:Key="DefaultButtonStyle" TargetType="Button">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <!-- Adapter la taille au contenu -->
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="Height" Value="Auto" />
-
-        <!-- Autres propriétés -->
-        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBackgroundBrush}" />
-        
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="helpers:CornerRadiusHelper.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-
-        <!-- Utilisation du Template personnalisé -->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <controls:ExtendedContentControl 
-                        Background="{TemplateBinding Background}"
-                        Foreground="{TemplateBinding Foreground}"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Padding="{TemplateBinding Padding}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding helpers:CornerRadiusHelper.CornerRadius}">
-                    </controls:ExtendedContentControl>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <!-- Triggers pour les états -->
-        <Style.Triggers>
-            <!-- État Hover -->
+    <!-- Base Button Style Template -->
+    <ControlTemplate x:Key="ButtonBaseTemplate" TargetType="Button">
+        <Border x:Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding helpers:CornerRadiusHelper.CornerRadius}"
+                SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter"
+                              Focusable="False"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ButtonHoverBackgroundBrush}" />
+                <!-- Simple generic hover: make opacity slightly lower to lighten/darken? 
+                     Or use a specific logic. For colored buttons, opacity 0.9 is often enough. -->
+                <Setter Property="Opacity" TargetName="border" Value="0.9"/>
             </Trigger>
-
-            <!-- État Disabled -->
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="{StaticResource ButtonDisabledBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{StaticResource ButtonDisabledForegroundBrush}" />
-            </Trigger>
-
-            <!-- État Toggled (IsPressed) -->
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource ButtonPressedBackgroundBrush}" />
+                <Setter Property="Opacity" TargetName="border" Value="0.8"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="0.98" ScaleY="0.98" CenterX="0.5" CenterY="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/> 
             </Trigger>
-        </Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="border" Value="#FF6C757D"/> <!-- Disabled Gray -->
+                <Setter Property="BorderBrush" TargetName="border" Value="#FF6C757D"/>
+                <Setter Property="Opacity" TargetName="border" Value="0.65"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- DEFAULT BUTTON (Dark/Black) -->
+    <Style x:Key="DefaultButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource DefaultButtonBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DefaultButtonBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="helpers:CornerRadiusHelper.CornerRadius" Value="8"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource ButtonBaseTemplate}"/>
     </Style>
 
-    <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}" />
-    
+    <!-- ACCENT BUTTON (Blue/System) -->
+    <Style x:Key="AccentButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentBrush}"/>
+        <!-- If SystemAccentBrush is light, foreground should be black, if dark, white. 
+             Assuming standard Blue is dark enough for White text. -->
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- DANGER BUTTON (Red) -->
+    <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+        <Setter Property="Background" Value="{DynamicResource DangerBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}"/>
+    </Style>
+
+    <!-- SUCCESS BUTTON (Green) -->
+    <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+        <Setter Property="Background" Value="{DynamicResource SuccessBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SuccessBrush}"/>
+    </Style>
+
+    <!-- Default Style assignment -->
+    <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}"/>
+
 </ResourceDictionary>

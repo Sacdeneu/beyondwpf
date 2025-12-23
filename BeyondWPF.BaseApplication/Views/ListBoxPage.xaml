@@ -1,0 +1,54 @@
+<UserControl x:Class="BeyondWPF.BaseApplication.Views.ListBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Transparent">
+    
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="ListBox Styles" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20"/>
+            
+            <WrapPanel>
+                <!-- Simple ListBox -->
+                <StackPanel Margin="20" Width="250">
+                    <TextBlock Text="Simple List" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <ListBox Height="200" SelectedIndex="0">
+                        <ListBoxItem Content="Item 1"/>
+                        <ListBoxItem Content="Item 2"/>
+                        <ListBoxItem Content="Item 3"/>
+                        <ListBoxItem Content="Item 4"/>
+                        <ListBoxItem Content="Item 5"/>
+                    </ListBox>
+                </StackPanel>
+
+                <!-- Complex Items -->
+                <StackPanel Margin="20" Width="250">
+                    <TextBlock Text="Rich Content" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <ListBox Height="200" SelectedIndex="1">
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock Text="Title 1" FontWeight="Bold"/>
+                                <TextBlock Text="Subtitle description goes here" FontSize="12" Opacity="0.7"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock Text="Title 2" FontWeight="Bold"/>
+                                <TextBlock Text="Subtitle description goes here" FontSize="12" Opacity="0.7"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                             <StackPanel>
+                                <TextBlock Text="Title 3" FontWeight="Bold"/>
+                                <TextBlock Text="Subtitle description goes here" FontSize="12" Opacity="0.7"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
