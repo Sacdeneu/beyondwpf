@@ -47,6 +47,7 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<SliderPage>();
                     services.AddTransient<TabControlPage>();
                     services.AddTransient<ListBoxPage>();
+                    services.AddTransient<ListViewPage>();
                     services.AddTransient<DatePickerPage>();
                     services.AddTransient<DialogsPage>();
                     // Register other pages here as we add them

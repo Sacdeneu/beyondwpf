@@ -154,6 +154,10 @@
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
 
+                                <Button Content="ListView" Command="{Binding NavigateToListViewCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
                                 <Button Content="DatePicker" Command="{Binding NavigateToDatePickerCommand}" 
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>

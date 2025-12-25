@@ -176,6 +176,12 @@ namespace BeyondWPF.BaseApplication.ViewModels
         }
 
         [RelayCommand]
+        public void NavigateToListView()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<ListViewPage>();
+        }
+
+        [RelayCommand]
         public void NavigateToDatePicker()
         {
              CurrentView = _serviceProvider.GetRequiredService<DatePickerPage>();

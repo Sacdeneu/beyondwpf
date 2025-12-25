@@ -15,7 +15,9 @@
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/RadioButton.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/TextBox.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ListBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ListView.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/CheckBox.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ScrollBar.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Slider.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/TabControl.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Calendar.xaml" />
