@@ -25,6 +25,7 @@ namespace BeyondWPF.BaseApplication
                 {
                     // Core Services
                     services.AddSingleton<IThemeService, ThemeService>();
+                    services.AddSingleton<IDialogService, DialogService>();
                     
                     // Settings
                     var settings = new AppSettings();
@@ -47,6 +48,7 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<TabControlPage>();
                     services.AddTransient<ListBoxPage>();
                     services.AddTransient<DatePickerPage>();
+                    services.AddTransient<DialogsPage>();
                     // Register other pages here as we add them
                 })
                 .Build();

@@ -13,6 +13,11 @@
         Background="Transparent"
         d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel, IsDesignTimeCreatable=False}">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:CornerRadiusToTopRightConverter x:Key="CornerRadiusToTopRightConverter"/>
+    </Window.Resources>
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="5" CornerRadius="0" GlassFrameThickness="0"/>
     </WindowChrome.WindowChrome>
@@ -30,8 +35,6 @@
             <!-- Title Bar -->
             <Grid Grid.Row="0" Background="Transparent">
                 <Grid.Resources>
-                    <converters:CornerRadiusToTopRightConverter x:Key="CornerRadiusToTopRightConverter"/>
-
                     <Style x:Key="CaptionButtonStyle" TargetType="Button">
                         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
                         <Setter Property="Background" Value="Transparent"/>
@@ -154,6 +157,10 @@
                                 <Button Content="DatePicker" Command="{Binding NavigateToDatePickerCommand}" 
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="Dialogs" Command="{Binding NavigateToDialogsCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
                             </StackPanel>
                         </ScrollViewer>
 
@@ -177,6 +184,21 @@
                      <!-- Inner corner radius for content could be added here if we want double rounded look, but usually window rounded is enough -->
                     <ContentControl Content="{Binding CurrentView}" Margin="5"/>
                 </Border>
+            </Grid>
+            <!-- Dialog Overlay -->
+            <Grid Grid.Row="0" Grid.RowSpan="2" 
+                  Visibility="{Binding IsDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Panel.ZIndex="1000">
+                
+                <!-- Dimmed Background -->
+                <Border Background="Black" Opacity="0.5" MouseDown="DialogOverlay_MouseDown"
+                        CornerRadius="{Binding BorderCornerRadius}"/>
+                
+                <!-- Dialog Content -->
+                <ContentControl Content="{Binding DialogContent}" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"
+                                Margin="20"/>
             </Grid>
         </Grid>
     </Border>

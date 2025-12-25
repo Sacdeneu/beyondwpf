@@ -73,5 +73,11 @@ namespace BeyondWPF.BaseApplication
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+        private void DialogOverlay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // Optional: prevent clicks from passing through if not handled by Border
+            e.Handled = true;
+        }
     }
 }

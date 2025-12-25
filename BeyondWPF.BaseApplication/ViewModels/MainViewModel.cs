@@ -13,6 +13,7 @@ namespace BeyondWPF.BaseApplication.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly IThemeService _themeService;
+        private readonly IDialogService _dialogService;
         private readonly IServiceProvider _serviceProvider;
         private readonly AppSettings _settings;
 
@@ -29,12 +30,28 @@ namespace BeyondWPF.BaseApplication.ViewModels
         private System.Windows.CornerRadius _borderCornerRadius;
 
         public AppSettings Settings => _settings;
+        public object? DialogContent => _dialogService.CurrentView;
+        public bool IsDialogOpen => _dialogService.IsOpen;
 
-        public MainViewModel(IThemeService themeService, IServiceProvider serviceProvider, AppSettings settings)
+        public MainViewModel(IThemeService themeService, IDialogService dialogService, IServiceProvider serviceProvider, AppSettings settings)
         {
             _themeService = themeService;
+            _dialogService = dialogService;
             _serviceProvider = serviceProvider;
             _settings = settings;
+
+            // Subscribe to DialogService changes
+            _dialogService.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(IDialogService.CurrentView))
+                {
+                    OnPropertyChanged(nameof(DialogContent));
+                }
+                else if (e.PropertyName == nameof(IDialogService.IsOpen))
+                {
+                    OnPropertyChanged(nameof(IsDialogOpen));
+                }
+            };
             
             // Restore theme from settings
             if (Enum.TryParse<SystemTheme>(_settings.Theme, out var savedTheme))
@@ -162,6 +179,12 @@ namespace BeyondWPF.BaseApplication.ViewModels
         public void NavigateToDatePicker()
         {
              CurrentView = _serviceProvider.GetRequiredService<DatePickerPage>();
+        }
+
+        [RelayCommand]
+        public void NavigateToDialogs()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<DialogsPage>();
         }
     }
 }
