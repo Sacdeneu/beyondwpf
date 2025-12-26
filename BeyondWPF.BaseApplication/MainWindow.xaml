@@ -169,10 +169,10 @@
                         </ScrollViewer>
 
                         <StackPanel Grid.Row="2" Margin="0,10">
-                            <ToggleButton Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" 
-                                          HorizontalAlignment="Stretch" Padding="10" Margin="0,5"/>
+                            <Button Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" 
+                                    HorizontalAlignment="Stretch" Margin="0,5"/>
                             <Button Content="Toggle Border" Command="{Binding ToggleBorderCommand}" 
-                                    HorizontalAlignment="Stretch" Padding="10" Margin="0,5"/>
+                                    HorizontalAlignment="Stretch" Margin="0,5"/>
                             <CheckBox Content="Save Window Position" IsChecked="{Binding Settings.SaveWindowPosition}"
                                       Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
                             <CheckBox Content="Enable Accent Color" IsChecked="{Binding Settings.UseAccentColor}"
