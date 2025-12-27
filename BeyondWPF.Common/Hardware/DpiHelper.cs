@@ -51,7 +51,6 @@ internal static class DpiHelper
     // becomes more central to various implementations, we may want to
     // look into fleshing it out a bit further.
     // ----
-    // Reference: https://docs.microsoft.com/en-us/dotnet/standard/frameworks
 
     /// <summary>
     /// Gets the DPI values from <see cref="SystemParameters"/>.

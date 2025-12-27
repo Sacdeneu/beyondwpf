@@ -1,0 +1,38 @@
+name: Publish to NuGet
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on version tags, e.g., v1.0.0, v1.0.0-rc.1
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Extract Version from Tag
+      shell: bash
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "Detected version: $VERSION"
+
+    - name: Restore dependencies
+      run: dotnet restore BeyondWPF.sln
+
+    - name: Build
+      run: dotnet build BeyondWPF.sln --configuration Release --no-restore /p:Version=${{ env.VERSION }}
+
+    - name: Pack
+      run: dotnet pack BeyondWPF.sln --configuration Release --no-build --output nupkgs /p:Version=${{ env.VERSION }}
+
+    - name: Push to NuGet
+      run: dotnet nuget push "nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

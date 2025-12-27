@@ -1,0 +1,38 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+    <Color x:Key="ControlLightColor">#FFF0F0F0</Color>
+    <Color x:Key="ControlDarkColor">#FF333333</Color>
+    <Color x:Key="TextColor">#FF000000</Color>
+    <!-- Fallback if defined locally, but typically overwritten by App resources -->
+    <Color x:Key="ButtonBackgroundColor">#FF3A87F2</Color>
+    <Color x:Key="DefaultButtonColor">#FF1F1F1F</Color> 
+    <Color x:Key="DangerColor">#FFDC3545</Color>
+    <Color x:Key="SuccessColor">#FF198754</Color>
+
+    <SolidColorBrush x:Key="BorderLightBrush" Color="{StaticResource BorderLightColor}" />
+    <SolidColorBrush x:Key="ControlLightBrush" Color="{StaticResource ControlLightColor}" />
+    <SolidColorBrush x:Key="ControlDarkBrush" Color="{StaticResource ControlDarkColor}" />
+    <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" />
+    
+    <SolidColorBrush x:Key="DefaultButtonBrush" Color="{StaticResource DefaultButtonColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    
+    <!-- Defining SystemAccentBrush for design-time/library build. 
+         At runtime, ThemeService might overwrite this or we use this as fallback. -->
+    <SolidColorBrush x:Key="SystemAccentBrush" Color="#FF0078D7" />
+
+    <!-- ComboBox Brushes -->
+    <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#FFCCCCCC" />
+    <SolidColorBrush x:Key="ComboBoxHoverBorderBrush" Color="{DynamicResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="ComboBoxPressedBorderBrush" Color="{DynamicResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="ComboBoxPopupBackgroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ComboBoxItemHoverBackgroundBrush" Color="#19000000" /> <!-- Low opacity black for hover -->
+    <SolidColorBrush x:Key="ComboBoxItemSelectedBackgroundBrush" Color="{DynamicResource SystemAccentColor}" Opacity="0.1" />
+    
+</ResourceDictionary>

@@ -1,0 +1,34 @@
+<UserControl x:Class="BeyondWPF.BaseApplication.Views.DatePickerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Transparent">
+    
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="DatePicker &amp; Calendar" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20"/>
+            
+            <WrapPanel>
+                <!-- Key Feature: DatePicker with Dark/Accent Calendar -->
+                <StackPanel Margin="20">
+                    <TextBlock Text="Standard DatePicker" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <DatePicker Width="200" HorizontalAlignment="Left" />
+                </StackPanel>
+
+                 <StackPanel Margin="20">
+                    <TextBlock Text="Disabled DatePicker" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <DatePicker Width="200" HorizontalAlignment="Left" IsEnabled="False" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                </StackPanel>
+            </WrapPanel>
+            
+             <TextBlock Text="Standalone Calendar (Shift+Click for Range)" FontSize="18" FontWeight="Medium" Margin="20,20,0,10" Foreground="{DynamicResource TextBrush}"/>
+            <Calendar HorizontalAlignment="Left" Margin="20,0,0,0" Style="{DynamicResource DefaultCalendarStyle}"
+                      SelectionMode="SingleRange"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

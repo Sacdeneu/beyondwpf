@@ -1,0 +1,32 @@
+<UserControl x:Class="BeyondWPF.BaseApplication.Views.CheckBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Transparent">
+    
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="CheckBox Styles" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20"/>
+            
+            <WrapPanel>
+                <StackPanel Margin="20">
+                    <TextBlock Text="Standard" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <CheckBox Content="Option 1" Margin="0,5"/>
+                    <CheckBox Content="Option 2 (Checked)" IsChecked="True" Margin="0,5"/>
+                    <CheckBox Content="Option 3 (Indeterminate)" IsChecked="{x:Null}" Margin="0,5"/>
+                    <CheckBox Content="Disabled" IsEnabled="False" IsChecked="True" Margin="0,5"/>
+                </StackPanel>
+
+                <StackPanel Margin="20">
+                    <TextBlock Text="Toggle Switch" FontSize="18" FontWeight="Medium" Margin="0,0,0,10" Foreground="{DynamicResource TextBrush}"/>
+                    <CheckBox Content="Wi-Fi" Style="{StaticResource ToggleSwitchStyle}" Margin="0,5"/>
+                    <CheckBox Content="Bluetooth" IsChecked="True" Style="{StaticResource ToggleSwitchStyle}" Margin="0,5"/>
+                    <CheckBox Content="Airplane Mode" IsEnabled="False" Style="{StaticResource ToggleSwitchStyle}" Margin="0,5"/>
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

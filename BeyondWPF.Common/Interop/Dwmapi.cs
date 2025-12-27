@@ -202,7 +202,6 @@ internal static class Dwmapi
 
     /// <summary>
     /// Options used by the DwmGetWindowAttribute and DwmSetWindowAttribute functions.
-    /// <para><see href="https://github.com/electron/electron/issues/29937"/></para>
     /// </summary>
     [Flags]
     public enum DWMWINDOWATTRIBUTE
