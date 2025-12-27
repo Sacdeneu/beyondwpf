@@ -11,7 +11,6 @@ namespace BeyondWPF.BaseApplication.Converters
         {
             if (value is CornerRadius cr)
             {
-                // Return a new CornerRadius with only the TopRight value preserved
                 return new CornerRadius(0, cr.TopRight, 0, 0);
             }
             return new CornerRadius(0);

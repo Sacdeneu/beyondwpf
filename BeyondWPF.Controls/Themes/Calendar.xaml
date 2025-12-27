@@ -205,30 +205,6 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-
-                        <!-- Previous Button (Up Arrow for Month Nav? No, usually Left/Right. 
-                             But User image shows arrows Up/Down or Left/Right? 
-                             Image shows Triangles pointing UP and DOWN. 
-                             Wait, standard Calendar uses Left/Right for Month.
-                             Let's check image... 
-                             Image top right has: Triangle UP, Triangle DOWN.
-                             This suggests "Previous Month" / "Next Month" are mapped to Up/Down icons?
-                             Or maybe it's Year selection? 
-                             Standard WPF Calendar uses PART_PreviousButton and PART_NextButton.
-                             Visual position in image: Top Right corner.
-                             Left icon: Previous. Right icon: Next.
-                             Let's use Triangle Left/Right or Up/Down based on intuition of 'Previous/Next'. 
-                             User image has Up/Down triangles. I will use Up/Down shapes but keep standard binding.
-                             PART_PreviousButton = Arrow Up (or Left)
-                             PART_NextButton = Arrow Down (or Right)
-                             Let's stick to standard behavior logic but use the visual icons from image if possible.
-                             Image: Left one is Triangle UP. Right one is Triangle DOWN.
-                             Reference: uploaded_image_2. It clearly shows [Month Year] ... [Up] [Down].
-                             Maybe they navigate years?
-                             Standard behavior: PreviousButton goes to Previous Month. NextButton goes to Next Month.
-                             I will map Previous -> Triangle UP, Next -> Triangle DOWN. 
-                        -->
-
                         <Button x:Name="PART_PreviousButton"
                                 Grid.Row="0" Grid.Column="2"
                                 Content="Pre">

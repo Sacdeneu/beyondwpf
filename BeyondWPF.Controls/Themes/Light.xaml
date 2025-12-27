@@ -8,8 +8,7 @@
     <Color x:Key="ControlDarkColor">#FF333333</Color>
     <Color x:Key="TextColor">#FF000000</Color>
     <!-- Fallback if defined locally, but typically overwritten by App resources -->
-    <Color x:Key="ButtonBackgroundColor">#FF3A87F2</Color> <!-- Default Blueish? No, maybe Dark for Default Button? -->
-    <!-- Let's redefine ButtonBackgroundColor to be the Default (Black/DarkGray) from the image -->
+    <Color x:Key="ButtonBackgroundColor">#FF3A87F2</Color>
     <Color x:Key="DefaultButtonColor">#FF1F1F1F</Color> 
     <Color x:Key="DangerColor">#FFDC3545</Color>
     <Color x:Key="SuccessColor">#FF198754</Color>

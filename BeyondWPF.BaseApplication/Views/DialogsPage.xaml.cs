@@ -16,17 +16,12 @@ namespace BeyondWPF.BaseApplication.Views
 
         private void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
-            // Create a simple UI for the dialog content
-            // In a real app, this would be a ViewModel with a DataTemplate
             var content = new StackPanel
             {
                 Width = 300,
                 Background = (System.Windows.Media.Brush)Application.Current.Resources["ControlLightBrush"],
             };
             
-            // Add padding via Border in content or style. 
-            // ControlLightBrush might be transparent? No, usually opaque.
-            // Let's wrap in a Border.
             var border = new Border
             {
                 Background = (System.Windows.Media.Brush)Application.Current.Resources["ControlLightBrush"],

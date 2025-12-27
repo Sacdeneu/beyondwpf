@@ -11,9 +11,6 @@ using BeyondWPF.BaseApplication.Settings;
 
 namespace BeyondWPF.BaseApplication
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private readonly IHost _host;
@@ -31,7 +28,7 @@ namespace BeyondWPF.BaseApplication
                     var settings = new AppSettings();
                     settings.LoadSettings<AppSettings>();
                     services.AddSingleton<ISetting>(settings);
-                    services.AddSingleton(settings); // Allow direct injection of AppSettings
+                    services.AddSingleton(settings);
 
                     // ViewModels
                     services.AddSingleton<MainViewModel>();
@@ -50,7 +47,6 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<ListViewPage>();
                     services.AddTransient<DatePickerPage>();
                     services.AddTransient<DialogsPage>();
-                    // Register other pages here as we add them
                 })
                 .Build();
         }

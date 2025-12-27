@@ -2,8 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using BeyondWPF.Core.Abstractions;
 using BeyondWPF.Core.Enums;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using BeyondWPF.BaseApplication.Views;
 using BeyondWPF.BaseApplication.Settings;
 using Microsoft.Extensions.DependencyInjection; // For resolving pages
@@ -40,7 +38,7 @@ namespace BeyondWPF.BaseApplication.ViewModels
             _serviceProvider = serviceProvider;
             _settings = settings;
 
-            // Subscribe to DialogService changes
+
             _dialogService.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(IDialogService.CurrentView))
@@ -89,15 +87,6 @@ namespace BeyondWPF.BaseApplication.ViewModels
         [RelayCommand]
         public void ToggleAccentColor()
         {
-             // Setting is bound TwoWay to CheckBox, so it's already updated.
-             // But we need to apply it.
-             // Actually, if we bind Command to CheckBox command, it fires after update or before?
-             // Safer to just re-read or pass the value.
-             // If we use EventToCommand or just execute command on click.
-             // Let's assume the Setter in Settings triggers something? No, Settings property changes don't trigger service calls automatically to keep separation.
-             // We will handle it in the command.
-             
-             // If bound to CheckBox, the property update happens first.
              _themeService.ApplySystemAccent(_settings.UseAccentColor);
         }
 

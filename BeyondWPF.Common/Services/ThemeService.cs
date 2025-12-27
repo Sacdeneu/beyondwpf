@@ -20,9 +20,7 @@ namespace BeyondWPF.Common.Services
             
             // Remove existing theme dictionaries
             // Strategy: Look for dictionaries with Source containing "Themes/" and "Light.xaml" or "Dark.xaml"
-            // Or better: Tag them? For now, simplistic string matching.
             
-           // Use a more robust swap logic logic similar to old manager but cleaner
             string themeName = theme switch
             {
                 SystemTheme.Dark => "Dark",
@@ -42,18 +40,10 @@ namespace BeyondWPF.Common.Services
            dictionaries.Add(new ResourceDictionary { Source = uri });
            
            // We need to re-apply accent because theme switch might reset resources or we want to persist the current accent state.
-           // However, the interface requires us to pass the state. 
-           // In a real app we might inject settings here or store state.
-           // For now, let's assume we call ApplySystemAccent explicitly from ViewModel after theme switch if needed, 
-           // or we overload ApplyTheme to accept the flag. 
-           // BUT, to keep it simple and assuming ViewModel handles it:
-           // We DO NOT call ApplySystemAccent here to avoid dependency on Settings.
-           // The ViewModel is responsible for re-applying accent if needed.
         }
 
         public SystemTheme GetCurrentTheme()
         {
-            // Simplified Registry check
              var rawAppsUseLightTheme = Microsoft.Win32.Registry.GetValue(RegistryKeyPath, RegistryValueAppsUseLightTheme, 1);
              return (rawAppsUseLightTheme is 0) ? SystemTheme.Dark : SystemTheme.Light;
         }

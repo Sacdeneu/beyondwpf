@@ -41,7 +41,7 @@ namespace BeyondWPF.BaseApplication.Settings
             set => SetProperty(ref _useAccentColor, value);
         }
 
-        // Window Persistence
+
         private bool _saveWindowPosition = true;
         public bool SaveWindowPosition
         {
