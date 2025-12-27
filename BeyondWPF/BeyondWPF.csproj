@@ -7,10 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>BeyondWPF</PackageId>
     <Version>1.0.0</Version>
-    <Authors>Sacdeneu</Authors>
     <Description>BeyondWPF Meta-Package. Installs all BeyondWPF libraries (Core, Common, Controls).</Description>
     <PackageTags>WPF;UI;Controls;Theme;MVVM</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
