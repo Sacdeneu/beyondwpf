@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>BeyondWPF</PackageId>
-    <Version>1.0.0</Version>
     <Description>BeyondWPF Meta-Package. Installs all BeyondWPF libraries (Core, Common, Controls).</Description>
     <PackageTags>WPF;UI;Controls;Theme;MVVM</PackageTags>
   </PropertyGroup>
