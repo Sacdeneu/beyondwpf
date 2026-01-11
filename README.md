@@ -1,4 +1,13 @@
+<p align="center">
+  <img src="logo.png" alt="BeyondWPF Logo" width="150"/>
+</p>
+
 # BeyondWPF 🚀
+
+[![GitHub Release](https://img.shields.io/github/v/release/Sacdeneu/BeyondWPF)](https://github.com/Sacdeneu/BeyondWPF/releases)
+[![NuGet](https://img.shields.io/nuget/v/BeyondWPF.svg)](https://www.nuget.org/packages/BeyondWPF)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/BeyondWPF.svg)](https://www.nuget.org/packages/BeyondWPF)
+[![License](https://img.shields.io/github/license/Sacdeneu/BeyondWPF)](https://github.com/Sacdeneu/BeyondWPF/blob/master/LICENSE)
 
 **BeyondWPF** is a modern WPF UI framework designed to simplify the creation of beautiful and responsive desktop applications. It provides a set of theme-aware controls, a flexible theming system, and a robust MVVM architecture foundation.
 
