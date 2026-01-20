@@ -47,6 +47,7 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<ListViewPage>();
                     services.AddTransient<DatePickerPage>();
                     services.AddTransient<DialogsPage>();
+                    services.AddTransient<ContextMenuPage>();
                 })
                 .Build();
         }

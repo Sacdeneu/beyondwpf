@@ -165,6 +165,10 @@
                                 <Button Content="Dialogs" Command="{Binding NavigateToDialogsCommand}" 
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="ContextMenu" Command="{Binding NavigateToContextMenuCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
                             </StackPanel>
                         </ScrollViewer>
 
