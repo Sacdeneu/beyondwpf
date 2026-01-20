@@ -1,4 +1,5 @@
 using System.Windows;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BeyondWPF.BaseApplication.ViewModels;
@@ -23,6 +24,7 @@ namespace BeyondWPF.BaseApplication
                     // Core Services
                     services.AddSingleton<IThemeService, ThemeService>();
                     services.AddSingleton<IDialogService, DialogService>();
+                    services.AddSingleton<INotificationService, NativeNotificationService>();
                     
                     // Settings
                     var settings = new AppSettings();
@@ -48,12 +50,28 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<DatePickerPage>();
                     services.AddTransient<DialogsPage>();
                     services.AddTransient<ContextMenuPage>();
+                    services.AddTransient<NotificationsPage>();
                 })
                 .Build();
         }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            // Listen to notification activation
+            ToastNotificationManagerCompat.OnActivated += toastArgs =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (Application.Current.MainWindow != null)
+                    {
+                        if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                            Application.Current.MainWindow.WindowState = WindowState.Normal;
+                        
+                        Application.Current.MainWindow.Activate();
+                    }
+                });
+            };
+
             await _host.StartAsync();
 
             try
