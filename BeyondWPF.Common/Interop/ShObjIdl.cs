@@ -220,5 +220,3 @@ internal static class ShObjIdl
         void SetTabProperties(IntPtr hwndTab, STPFLAG stpFlags);
     }
 }
-
-#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter

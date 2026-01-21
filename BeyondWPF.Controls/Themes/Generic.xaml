@@ -23,6 +23,7 @@
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/Calendar.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/DatePicker.xaml" />
         <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ProgressBar.xaml" />
+        <ResourceDictionary Source="/BeyondWPF.Controls;component/Themes/ContextMenu.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

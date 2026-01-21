@@ -84,11 +84,6 @@ public static class UnsafeNativeMethods
         var pvAttribute = 0x0; // Disable
         Dwmapi.DWMWINDOWATTRIBUTE dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE;
 
-        /*if (!Win32.Utilities.IsOSWindows11Insider1OrNewer)
-        {
-            dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DMWA_USE_IMMERSIVE_DARK_MODE_OLD;
-        }*/
-
         // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));
 
@@ -122,11 +117,6 @@ public static class UnsafeNativeMethods
 
         var pvAttribute = 0x1; // Enable
         Dwmapi.DWMWINDOWATTRIBUTE dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE;
-
-        /*if (!Win32.Utilities.IsOSWindows11Insider1OrNewer)
-        {
-            dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DMWA_USE_IMMERSIVE_DARK_MODE_OLD;
-        }*/
 
         // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));

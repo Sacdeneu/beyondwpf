@@ -181,5 +181,17 @@ namespace BeyondWPF.BaseApplication.ViewModels
         {
              CurrentView = _serviceProvider.GetRequiredService<DialogsPage>();
         }
+
+        [RelayCommand]
+        public void NavigateToContextMenu()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<ContextMenuPage>();
+        }
+
+        [RelayCommand]
+        public void NavigateToNotifications()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<NotificationsPage>();
+        }
     }
 }
