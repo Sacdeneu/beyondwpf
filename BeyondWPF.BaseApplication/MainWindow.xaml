@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:BeyondWPF.BaseApplication.ViewModels"
+        xmlns:commonViewModels="clr-namespace:BeyondWPF.Common.ViewModels;assembly=BeyondWPF.Common"
         xmlns:converters="clr-namespace:BeyondWPF.BaseApplication.Converters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
@@ -15,7 +17,94 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
         <converters:CornerRadiusToTopRightConverter x:Key="CornerRadiusToTopRightConverter"/>
+        <converters:CornerRadiusToBottomConverter x:Key="CornerRadiusToBottomConverter"/>
+
+        <Style x:Key="CaptionButtonStyle" TargetType="Button">
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#33888888"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#66888888"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CaptionCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="{Binding DataContext.BorderCornerRadius, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource CornerRadiusToTopRightConverter}}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E81123"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#BC0B19"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+            <Setter Property="Content" Value="&#xE922;"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                    <Setter Property="Content" Value="&#xE923;"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ToggleButtonStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" Padding="8,2" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#22FFFFFF"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SystemAccentBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
@@ -30,60 +119,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Title Bar -->
             <Grid Grid.Row="0" Background="Transparent">
-                <Grid.Resources>
-                    <Style x:Key="CaptionButtonStyle" TargetType="Button">
-                        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                        <Setter Property="Width" Value="45"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#33888888"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#66888888"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-
-                    <Style x:Key="CaptionCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
-                         <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" 
-                                            CornerRadius="{Binding DataContext.BorderCornerRadius, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource CornerRadiusToTopRightConverter}}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#E81123"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#BC0B19"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Resources>
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -92,9 +133,9 @@
                 <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10,0" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button Content="_" Click="Minimize_Click" Style="{StaticResource CaptionButtonStyle}"/>
-                    <Button Content="[ ]" Click="Maximize_Click" Style="{StaticResource CaptionButtonStyle}"/>
-                    <Button Content="X" Click="Close_Click" Style="{StaticResource CaptionCloseButtonStyle}"/> 
+                    <Button Click="Minimize_Click" Style="{StaticResource CaptionButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="10" Content="&#xE921;"/>
+                    <Button Click="Maximize_Click" Style="{StaticResource MaximizeButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="10"/>
+                    <Button Click="Close_Click" Style="{StaticResource CaptionCloseButtonStyle}" FontFamily="Segoe MDL2 Assets" FontSize="10" Content="&#xE8BB;"/>
                 </StackPanel>
             </Grid>
 
@@ -173,6 +214,11 @@
                                 <Button Content="Notifications" Command="{Binding NavigateToNotificationsCommand}" 
                                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
                                         Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"/>
+
+                                <Button Content="ViewModel Types" Command="{Binding NavigateToViewModelsCommand}" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="10,8" Margin="0,2"
+                                        Background="Transparent" BorderThickness="0" Foreground="{DynamicResource TextBrush}"
+                                        FontWeight="Bold"/>
                             </StackPanel>
                         </ScrollViewer>
 
@@ -185,6 +231,8 @@
                                       Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
                             <CheckBox Content="Enable Accent Color" IsChecked="{Binding Settings.UseAccentColor}"
                                       Command="{Binding ToggleAccentColorCommand}"
+                                      Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
+                            <CheckBox Content="Enable Log Console" IsChecked="{Binding Settings.EnableLogConsole}"
                                       Margin="0,5" Foreground="{DynamicResource TextBrush}"/>
                         </StackPanel>
                     </Grid>
@@ -211,6 +259,171 @@
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center"
                                 Margin="20"/>
+            </Grid>
+            <!-- Global Loader & Status -->
+            <Grid Grid.Row="2" Height="32" 
+                  Visibility="{Binding Source={x:Static commonViewModels:LoadingService.Instance}, Path=IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+                
+                <!-- Sophisticated Background -->
+                <Border Background="{DynamicResource ControlDarkBrush}" 
+                        BorderBrush="{DynamicResource BorderLightBrush}" 
+                        BorderThickness="0,1,0,0"
+                        CornerRadius="{Binding BorderCornerRadius, Converter={StaticResource CornerRadiusToBottomConverter}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Message with Icon -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="15,0"
+                                    Visibility="{Binding Source={x:Static commonViewModels:LoadingService.Instance}, Path=StatusMessage, Converter={StaticResource StringVisibilityConverter}}">
+                            <iconPacks:PackIconMaterial Kind="ProgressClock" VerticalAlignment="Center" Width="14" Height="14" Foreground="{DynamicResource SystemAccentBrush}" Opacity="0.9"/>
+                            <TextBlock Text="{Binding Source={x:Static commonViewModels:LoadingService.Instance}, Path=StatusMessage}"
+                                       VerticalAlignment="Center" Margin="10,0,0,0"
+                                       FontSize="12" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextBrush}"/>
+                        </StackPanel>
+
+                        <!-- Progress Indicator -->
+                        <Grid Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                            <ProgressBar IsIndeterminate="True" Height="4"
+                                         BorderThickness="0" Background="#10888888"
+                                         Foreground="{DynamicResource SystemAccentBrush}" />
+                        </Grid>
+                        
+                        <!-- Secondary Padding -->
+                        <Border Grid.Column="2" Width="15"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Debug Logs Console -->
+            <Grid Grid.Row="3" Background="{DynamicResource ControlDarkBrush}" 
+                  Visibility="{Binding Settings.EnableLogConsole, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Console Footer (Latest Log) -->
+                <Border Grid.Row="0" Height="32" Background="Transparent" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,1,0,0"
+                        CornerRadius="{Binding BorderCornerRadius, Converter={StaticResource CornerRadiusToBottomConverter}, ConverterParameter=Footer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Command="{Binding LogConsole.ToggleExpandedCommand}" Background="Transparent" BorderThickness="0" Padding="10,0">
+                            <iconPacks:PackIconMaterial Kind="ChevronUp" Width="14" Height="14" Foreground="{DynamicResource TextBrush}" Opacity="0.8">
+                                <iconPacks:PackIconMaterial.Style>
+                                    <Style TargetType="iconPacks:PackIconMaterial">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LogConsole.IsExpanded}" Value="True">
+                                                <Setter Property="Kind" Value="ChevronDown"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconMaterial.Style>
+                            </iconPacks:PackIconMaterial>
+                        </Button>
+
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource TextBrush}" Opacity="0.7"
+                                   Text="{Binding LogConsole.LatestLog.Message}" TextTrimming="CharacterEllipsis" FontStyle="Italic"/>
+                        
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10,0" VerticalAlignment="Center">
+                             <Ellipse Width="8" Height="8" Margin="0,0,5,0">
+                                 <Ellipse.Style>
+                                     <Style TargetType="Ellipse">
+                                         <Setter Property="Fill" Value="Gray"/>
+                                         <Style.Triggers>
+                                             <DataTrigger Binding="{Binding LogConsole.LatestLog.Level}" Value="Error">
+                                                 <Setter Property="Fill" Value="#E81123"/>
+                                             </DataTrigger>
+                                             <DataTrigger Binding="{Binding LogConsole.LatestLog.Level}" Value="Warning">
+                                                 <Setter Property="Fill" Value="Orange"/>
+                                             </DataTrigger>
+                                             <DataTrigger Binding="{Binding LogConsole.LatestLog.Level}" Value="Info">
+                                                 <Setter Property="Fill" Value="DeepSkyBlue"/>
+                                             </DataTrigger>
+                                         </Style.Triggers>
+                                     </Style>
+                                 </Ellipse.Style>
+                             </Ellipse>
+                             <TextBlock Text="{Binding LogConsole.LatestLog.Level}" FontSize="10" Foreground="{DynamicResource TextBrush}" Opacity="0.5" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Expanded Console Body -->
+                <Border Grid.Row="1" Height="200" Background="{DynamicResource ControlLightBrush}" Opacity="0.05"  BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,1,0,0"
+                        CornerRadius="{Binding BorderCornerRadius, Converter={StaticResource CornerRadiusToBottomConverter}}"
+                        Visibility="{Binding LogConsole.IsExpanded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <!-- Note: Highlighting specific log background -->
+                </Border>
+                <Border Grid.Row="1" Height="200" Background="Transparent" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,1,0,0"
+                        CornerRadius="{Binding BorderCornerRadius, Converter={StaticResource CornerRadiusToBottomConverter}}"
+                        Visibility="{Binding LogConsole.IsExpanded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Toolbar -->
+                        <Border Grid.Row="0" Background="{DynamicResource ControlDarkBrush}" Padding="10,4" BorderBrush="{DynamicResource BorderLightBrush}" BorderThickness="0,0,0,1">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton Content="All" IsChecked="{Binding LogConsole.FilterLevel, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Null}}" 
+                                                 Style="{StaticResource ToggleButtonStyle}" Margin="0,0,5,0"/>
+                                    <RadioButton Content="Error" IsChecked="{Binding LogConsole.FilterLevel, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Error}" 
+                                                 Style="{StaticResource ToggleButtonStyle}" Margin="0,0,5,0"/>
+                                    <RadioButton Content="Debug" IsChecked="{Binding LogConsole.FilterLevel, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Debug}" 
+                                                 Style="{StaticResource ToggleButtonStyle}" Margin="0,0,5,0"/>
+                                    <RadioButton Content="Info" IsChecked="{Binding LogConsole.FilterLevel, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Info}" 
+                                                 Style="{StaticResource ToggleButtonStyle}" Margin="0,0,5,0"/>
+                                </StackPanel>
+                                <Button Content="Clear" Command="{Binding LogConsole.ClearLogsCommand}" HorizontalAlignment="Right" Padding="10,2" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Logs List -->
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
+                            <ItemsControl ItemsSource="{Binding LogConsole.LogView}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                                            <TextBlock Text="{Binding Timestamp, StringFormat='[{0:HH:mm:ss}]'}" Foreground="Gray" Width="70" FontSize="11"/>
+                                            <TextBlock Text="{Binding Level}" Width="50" FontSize="11" Margin="5,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Level}" Value="Error">
+                                                                <Setter Property="Foreground" Value="#E81123"/>
+                                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Level}" Value="Warning">
+                                                                <Setter Property="Foreground" Value="Orange"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Level}" Value="Debug">
+                                                                <Setter Property="Foreground" Value="Gray"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Message}" Foreground="{DynamicResource TextBrush}" Opacity="0.9" TextWrapping="Wrap" FontSize="11"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
     </Border>

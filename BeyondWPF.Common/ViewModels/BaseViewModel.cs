@@ -1,50 +1,32 @@
-﻿using BeyondWPF.Core.Commands;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
-namespace BeyondWPF.Common.ViewModels
+namespace BeyondWPF.Common.ViewModels;
+
+/// <summary>
+/// Base class for all ViewModels in the application.
+/// </summary>
+public abstract partial class BaseViewModel : ObservableObject
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    [ObservableProperty]
+    private bool _isBusy;
+
+    [ObservableProperty]
+    private string _title = string.Empty;
+
+    /// <summary>
+    /// Command to refresh the data in the ViewModel.
+    /// </summary>
+    [RelayCommand]
+    public virtual void Refresh()
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+    }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
-        }
-
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
-
-        private ICommand _refreshCommand;
-        public ICommand RefreshCommand => _refreshCommand ??= new RelayCommand(Refresh);
-
-        public virtual void Refresh()
-        {
-        }
-
-        public virtual void HandleError(string message)
-        {
-        }
+    /// <summary>
+    /// Handles errors occurring in the ViewModel.
+    /// </summary>
+    /// <param name="message">The error message.</param>
+    public virtual void HandleError(string message)
+    {
     }
 }

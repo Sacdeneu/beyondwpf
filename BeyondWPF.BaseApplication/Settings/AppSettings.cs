@@ -8,6 +8,17 @@ namespace BeyondWPF.BaseApplication.Settings
     /// </summary>
     public class AppSettings : BaseSettings
     {
+        private bool _enableLogConsole = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the debug log console is enabled.
+        /// </summary>
+        public bool EnableLogConsole
+        {
+            get => _enableLogConsole;
+            set => SetProperty(ref _enableLogConsole, value);
+        }
+
         private string _theme = "Light";
 
         /// <summary>

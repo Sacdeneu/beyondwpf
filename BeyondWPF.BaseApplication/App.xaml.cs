@@ -9,6 +9,10 @@ using BeyondWPF.Core.Abstractions;
 using BeyondWPF.Core.Enums;
 using BeyondWPF.Core.Settings;
 using BeyondWPF.BaseApplication.Settings;
+using BeyondWPF.Common.ViewModels;
+using BeyondWPF.Common.Logging;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace BeyondWPF.BaseApplication
 {
@@ -19,12 +23,19 @@ namespace BeyondWPF.BaseApplication
         public App()
         {
             _host = Host.CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddProvider(new WpfLoggerProvider(LogService.Instance));
+                })
                 .ConfigureServices((context, services) =>
                 {
                     // Core Services
                     services.AddSingleton<IThemeService, ThemeService>();
                     services.AddSingleton<IDialogService, DialogService>();
                     services.AddSingleton<INotificationService, NativeNotificationService>();
+                    services.AddSingleton(LoadingService.Instance);
+                    services.AddSingleton(LogService.Instance);
                     
                     // Settings
                     var settings = new AppSettings();
@@ -34,7 +45,13 @@ namespace BeyondWPF.BaseApplication
 
                     // ViewModels
                     services.AddSingleton<MainViewModel>();
-
+                    services.AddSingleton<LogConsoleViewModel>();
+                    services.AddTransient<AsyncExampleViewModel>();
+                    services.AddTransient<FormExampleViewModel>();
+                    services.AddSingleton<ViewModelsPage>(s => new ViewModelsPage(
+                        s.GetRequiredService<AsyncExampleViewModel>(),
+                        s.GetRequiredService<FormExampleViewModel>()));
+                    
                     // Views
                     services.AddSingleton<MainWindow>();
                     services.AddTransient<ComboBoxPage>();
@@ -51,12 +68,18 @@ namespace BeyondWPF.BaseApplication
                     services.AddTransient<DialogsPage>();
                     services.AddTransient<ContextMenuPage>();
                     services.AddTransient<NotificationsPage>();
+
+                    LogService.Instance.Debug("Services registered successfully.");
                 })
                 .Build();
         }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+            
+            LogService.Instance.Info("BeyondWPF Application starting up...");
+
             // Listen to notification activation
             ToastNotificationManagerCompat.OnActivated += toastArgs =>
             {

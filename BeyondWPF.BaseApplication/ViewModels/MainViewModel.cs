@@ -4,6 +4,7 @@ using BeyondWPF.Core.Abstractions;
 using BeyondWPF.Core.Enums;
 using BeyondWPF.BaseApplication.Views;
 using BeyondWPF.BaseApplication.Settings;
+using BeyondWPF.Common.Services;
 using Microsoft.Extensions.DependencyInjection; // For resolving pages
 
 namespace BeyondWPF.BaseApplication.ViewModels
@@ -22,6 +23,9 @@ namespace BeyondWPF.BaseApplication.ViewModels
         private object _currentView;
 
         [ObservableProperty]
+        private LogConsoleViewModel _logConsole;
+
+        [ObservableProperty]
         private bool _isDarkTheme;
 
         [ObservableProperty]
@@ -37,6 +41,12 @@ namespace BeyondWPF.BaseApplication.ViewModels
             _dialogService = dialogService;
             _serviceProvider = serviceProvider;
             _settings = settings;
+            _logConsole = _serviceProvider.GetRequiredService<LogConsoleViewModel>();
+
+            LogService.Instance.Info("MainViewModel initialized.");
+            LogService.Instance.Error("Log Console test: Error captured.");
+            LogService.Instance.Warning("Log Console test: Warning captured.");
+            LogService.Instance.Debug("Log Console test: Debug message.");
 
 
             _dialogService.PropertyChanged += (s, e) =>
@@ -113,67 +123,74 @@ namespace BeyondWPF.BaseApplication.ViewModels
         [RelayCommand]
         public void NavigateToComboBox()
         {
-             CurrentView = _serviceProvider.GetRequiredService<ComboBoxPage>();
+             Navigate(_serviceProvider.GetRequiredService<ComboBoxPage>());
         }
 
         [RelayCommand]
         public void NavigateToButton()
         {
-             CurrentView = _serviceProvider.GetRequiredService<ButtonPage>();
+             Navigate(_serviceProvider.GetRequiredService<ButtonPage>());
         }
 
         [RelayCommand]
         public void NavigateToTextBox()
         {
-             CurrentView = _serviceProvider.GetRequiredService<TextBoxPage>();
+             Navigate(_serviceProvider.GetRequiredService<TextBoxPage>());
         }
 
         [RelayCommand]
         public void NavigateToCheckBox()
         {
-             CurrentView = _serviceProvider.GetRequiredService<CheckBoxPage>();
+             Navigate(_serviceProvider.GetRequiredService<CheckBoxPage>());
         }
 
         [RelayCommand]
         public void NavigateToRadioButton()
         {
-             CurrentView = _serviceProvider.GetRequiredService<RadioButtonPage>();
+             Navigate(_serviceProvider.GetRequiredService<RadioButtonPage>());
         }
 
         [RelayCommand]
         public void NavigateToProgressBar()
         {
-             CurrentView = _serviceProvider.GetRequiredService<ProgressBarPage>();
+             Navigate(_serviceProvider.GetRequiredService<ProgressBarPage>());
         }
 
         [RelayCommand]
         public void NavigateToSlider()
         {
-             CurrentView = _serviceProvider.GetRequiredService<SliderPage>();
+             Navigate(_serviceProvider.GetRequiredService<SliderPage>());
         }
 
         [RelayCommand]
         public void NavigateToTabControl()
         {
-             CurrentView = _serviceProvider.GetRequiredService<TabControlPage>();
+             Navigate(_serviceProvider.GetRequiredService<TabControlPage>());
         }
 
         [RelayCommand]
         public void NavigateToListBox()
         {
-             CurrentView = _serviceProvider.GetRequiredService<ListBoxPage>();
+             Navigate(_serviceProvider.GetRequiredService<ListBoxPage>());
+        }
+
+        [RelayCommand]
+        private void Navigate(object view)
+        {
+            CurrentView = view;
+            LogService.Instance.Info($"Navigated to {view.GetType().Name}");
         }
 
         [RelayCommand]
         public void NavigateToListView()
         {
-             CurrentView = _serviceProvider.GetRequiredService<ListViewPage>();
+             Navigate(_serviceProvider.GetRequiredService<ListViewPage>());
         }
 
         [RelayCommand]
         public void NavigateToDatePicker()
         {
-             CurrentView = _serviceProvider.GetRequiredService<DatePickerPage>();
+             Navigate(_serviceProvider.GetRequiredService<DatePickerPage>());
         }
 
         [RelayCommand]
@@ -192,6 +209,12 @@ namespace BeyondWPF.BaseApplication.ViewModels
         public void NavigateToNotifications()
         {
              CurrentView = _serviceProvider.GetRequiredService<NotificationsPage>();
+        }
+
+        [RelayCommand]
+        public void NavigateToViewModels()
+        {
+             CurrentView = _serviceProvider.GetRequiredService<ViewModelsPage>();
         }
     }
 }
